@@ -2,6 +2,7 @@ package com.example.retouf2;
 
 import android.media.MediaPlayer;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
@@ -137,6 +138,18 @@ public class MainActivity extends AppCompatActivity {
     public void acierto(){
         mp = MediaPlayer.create(MainActivity.this,R.raw.aplausos);
         mp.start();
+
+        // Detener el sonido después de 2 segundos
+        new Handler().postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                if (mp.isPlaying()) {
+                    mp.stop();
+                }
+                mp.release();
+                mp = null;
+            }
+        }, 6000);
     }
     public void fallo(){
         mp = MediaPlayer.create(MainActivity.this, R.raw.error);
